@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "name": "express_boilerplate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephen-kovolski/express_boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephen-kovolski/express_boilerplate/issues"
+  },
+  "homepage": "https://github.com/stephen-kovolski/express_boilerplate#readme",
+  "description": ""
+}
