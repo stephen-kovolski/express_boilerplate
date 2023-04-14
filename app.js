@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
   if (myMotel[i].available == true){
       
     }
-    //res.sendFile(__dirname + "/public/index.html");
+    res.sendFile(__dirname + "/public/index.html");
 
     res.status(200).json({
       message: "successful get request",
