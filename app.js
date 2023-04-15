@@ -1,140 +1,75 @@
 const express = require('express');
 const app = express();
-const port = 3000
-//const myMotel = require('./my_motel.js')
+const myMotel = require('./my_motel.js')
 
+
+app.use(express.json());
 //app.use(express.static("public"));
 
-let myMotel = [
-  {
-    id: 1,
-    room_number: 101,
-    room_price: 89.99,
-    available: false,
-    checkin_date: '2023-04-10',
-    checkout_date: '2023-04-14',
-    customer_name: 'John Smith',
-    customer_phone: '555-1234',
-    notes: 'Late check-in requested'
-  },
-  {
-    id: 2,
-    room_number: 102,
-    room_price: 89.99,
-    available: false,
-    checkin_date: '2023-04-12',
-    checkout_date: '2023-04-15',
-    customer_name: 'Jane Doe',
-    customer_phone: '555-5678',
-    notes: 'Early check-out requested'
-  },
-  {
-    id: 3,
-    room_number: 103,
-    room_price: 99.99,
-    available: true,
-    checkin_date: '',
-    checkout_date: '',
-    customer_name: '',
-    customer_phone: '',
-    notes: ''
-  },
-  {
-    id: 4,
-    room_number: 104,
-    room_price: 99.99,
-    available: true,
-    checkin_date: '',
-    checkout_date: '',
-    customer_name: '',
-    customer_phone: '',
-    notes: ''
-  },
-  {
-    id: 5,
-    room_number: 105,
-    room_price: 109.99,
-    available: false,
-    checkin_date: '',
-    checkout_date: '',
-    customer_name: '',
-    customer_phone: '',
-    notes: ''
-  },
-  {
-    id: 6,
-    room_number: 106,
-    room_price: 109.99,
-    available: true,
-    checkin_date: '',
-    checkout_date: '',
-    customer_name: '',
-    customer_phone: '',
-    notes: ''
-  },
-  {
-    id: 7,
-    room_number: 107,
-    room_price: 119.99,
-    available: true,
-    checkin_date: '',
-    checkout_date: '',
-    customer_name: '',
-    customer_phone: '',
-    notes: ''
-  },
-  {
-    id: 8,
-    room_number: 108,
-    room_price: 119.99,
-    available: true,
-    checkin_date: '',
-    checkout_date: '',
-    customer_name: '',
-    customer_phone: '',
-    notes: ''
-  },
-  {
-    id: 9,
-    room_number: 109,
-    room_price: 129.99,
-    available: true,
-    checkin_date: '',
-    checkout_date: '',
-    customer_name: '',
-    customer_phone: '',
-    notes: ''
-  },
-  {
-    id: 10,
-    room_number: 110,
-    room_price: 129.99,
-    available: true,
-    checkin_date: '',
-    checkout_date: '',
-    customer_name: '',
-    customer_phone: '',
-    notes: ''
-  }
-];
-let new_array = []
-app.get('/', function (req, res) {
-  for (let i = 0; i < myMotel.length; i++){
-      if (myMotel.available == true){
-        //new_array.push(myMotel[i])
-        res.send(myMotel)
-        }
-    
-        //res.sendFile(__dirname + "/public/index.html");
+let availableRooms = [];
 
-  }
+app.get('/', function (req, res) { //welcome page
+  res.send('welcome')
+
 });
 
+
+//display all available rooms using .foreach()
+app.get('/available', function (req, res) { 
+  myMotel.forEach(function(room){
+    if (room.available === true) {
+      availableRooms.push(room);
+    }
+  });
+  res.send(availableRooms)
+});
+
+//add new rooms to myMotel
+app.post('/available', function(req, res) {
+
+
+  const new_room = {
+    id: myMotel.length + 1, 
+    room_number: myMotel.length + 100,
+    room_price: 0,
+    available: "",
+    checkin_date: "",
+    checkout_date: "",
+    customer_name: "",
+    customer_phone: 1234567890,
+    notes: "",
+  }
+//push the new room that was just creeated into the array
+myMotel.push(new_room)
+res.send(new_room) //send the new room to the client to give the new id and to make sure it worked
+
+
+})
+
+//updated room options.  Adding amenities
+app.put('/rooms/:id', function(req, res){
+
+
+
+
+})
+
+//display the clients choice
+app.get('/booking/:id', function(req, res){
+  res.send("hello")
+})
+
+
+
+
+
+
+        //res.sendFile(__dirname + "/public/index.html");
 //    const path = process.cwd() + '/html/home.html';
 
+const port = process.env.PORT || 3000;
+app.listen(port, ()=> console.log(`listening on port ${port}`));
 
-app.listen(port)
-console.log(`listening on port ${port}`);
 
 
 
