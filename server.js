@@ -1,20 +1,29 @@
 const express = require('express');
 const app = express();
+const expressLayouts = require('express-ejs-layouts')
+
 const myMotel = require('./my_motel.js')
+const indexRouter = require('./routes/index.js')
 
+app.set('view engine', 'ejs')
+app.set('views', __dirname + '/view')
+app.set('layout', 'layouts/layout')
+app.use(expressLayouts)
+app.use(express.static('public'))
 
+app.use('/', indexRouter)
 app.use(express.json());
+
+
 //app.use(express.static("public"));
-
-let availableRooms = [];
-
-app.get('/', function (req, res) { //welcome page
-  res.send('welcome')
-
-});
+//  app.get('/', function (req, res) { //welcome page
+//    res.send('welcome')
+// });
 
 
 //display all available rooms using .foreach()
+let availableRooms = [];
+
 app.get('/available', function (req, res) { 
   myMotel.forEach(function(room){
     if (room.available === true) {
