@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router()
-const myMotel = require('../my_motel.js')
+const fs = require('fs');
+const myMotel = require('./routes/my_motel.js')
 
 let availableRooms = [];
 
-
+console.log(fs);
 
 router.get('/', function (req, res) { //welcome page
     res.send('welcome')
@@ -12,13 +13,20 @@ router.get('/', function (req, res) { //welcome page
   });
 
 router.get('/available', function (req, res) { 
-    myMotel.forEach(function(room){
-      if (room.available === true) {
-        availableRooms.push(room);
-      }
-    });
-    res.send(availableRooms)
+  
+  let motelData = fs.readFileSync('../my_motel.txt', 'utf-8')
+  let motelObj = JSON.parse(motelData);
+
+  console.log(motelObj);
+  motelObj.forEach(function(room){
+    if (room.available === true) {
+      availableRooms.push(room);
+    }
   });
+  res.send(availableRooms)
+});
+
+
 
   //add new rooms to myMotel
 router.post('/available', function(req, res) {
@@ -34,6 +42,9 @@ router.post('/available', function(req, res) {
       customer_phone: 1234567890,
       notes: "",
     }
+
+  
+
   //push the new room that was just creeated into the array
   myMotel.push(new_room)
   res.send(new_room) //send the new room to the client to give the new id and to make sure it worked

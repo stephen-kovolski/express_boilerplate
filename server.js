@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts')
-
+const fs = require('fs');
 const myMotel = require('./my_motel.js')
 const indexRouter = require('./routes/index.js')
 
